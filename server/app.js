@@ -1,11 +1,14 @@
 const express = require('express');
 require('dotenv').config();
 const pool = require('./config/db');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+
+app.use('/api/auth', authRoutes);
 
 // Test route to confirm server + DB connection work
 app.get('/api/health', async (req, res) => {
