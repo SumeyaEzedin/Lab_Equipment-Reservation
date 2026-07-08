@@ -9,12 +9,12 @@ const requireRole = require('./middleware/roleMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
+const reservationRoutes = require('./routes/reservationRoutes');
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/equipment', equipmentRoutes);
-
+app.use('/api/reservations', reservationRoutes);
 // Test route to confirm server + DB connection work
 app.get('/api/health', async (req, res) => {
     try {
