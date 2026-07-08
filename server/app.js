@@ -1,6 +1,7 @@
 process.on('exit', (code) => {
     console.log('Process is exiting with code:', code);
 });
+const cors = require('cors');
 const express = require('express');
 require('dotenv').config();
 const pool = require('./config/db');
@@ -16,7 +17,7 @@ const reservationRoutes = require('./routes/reservationRoutes');
 const damageReportRoutes = require('./routes/damageReportRoutes');
 
 app.use(express.json());
-
+app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/equipment', equipmentRoutes);
 app.use('/api/reservations', reservationRoutes);
