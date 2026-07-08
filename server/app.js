@@ -1,3 +1,6 @@
+process.on('exit', (code) => {
+    console.log('Process is exiting with code:', code);
+});
 const express = require('express');
 require('dotenv').config();
 const pool = require('./config/db');

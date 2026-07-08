@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard - Lab Equipment Reservation</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <h2>Lab Equipment Reservation</h2>
+      <div>
+        <span id="userInfo"></span>
+        <button id="logoutBtn">Log Out</button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Equipment Section -->
+      <div class="card">
+        <h3>Equipment</h3>
+        <div id="addEquipmentForm" class="hidden">
+          <label>Name</label>
+          <input type="text" id="eqName" />
+          <label>Category</label>
+          <input type="text" id="eqCategory" />
+          <label>Description</label>
+          <input type="text" id="eqDescription" />
+          <label>Quantity</label>
+          <input type="number" id="eqQuantity" min="1" />
+          <button id="addEquipmentBtn">Add Equipment</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Quantity</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="equipmentTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Reservation Request Section -->
+      <div class="card" id="requestReservationCard">
+        <h3>Request a Reservation</h3>
+        <label>Equipment ID</label>
+        <input type="number" id="resEquipmentId" />
+        <label>Quantity</label>
+        <input type="number" id="resQuantity" min="1" />
+        <label>Start Time</label>
+        <input type="datetime-local" id="resStart" />
+        <label>End Time</label>
+        <input type="datetime-local" id="resEnd" />
+        <button id="requestReservationBtn">Request Reservation</button>
+        <p id="reservationError" class="error-message"></p>
+      </div>
+
+      <!-- Reservations Table -->
+      <div class="card">
+        <h3>Reservations</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Equipment</th>
+              <th>Qty</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="reservationsTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Damage Reports -->
+      <div class="card">
+        <h3>Damage Reports</h3>
+        <div>
+          <label>Reservation ID</label>
+          <input type="number" id="damageReservationId" />
+          <label>Description</label>
+          <input type="text" id="damageDescription" />
+          <button id="reportDamageBtn">Report Damage</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Reservation</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="damageTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/equipment.js"></script>
+    <script src="js/reservations.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lab Equipment Reservation</title>
+  </head>
+  <body>
+    <script>
+      const token = localStorage.getItem("token");
+      window.location.href = token ? "dashboard.html" : "login.html";
+    </script>
+  </body>
+</html>
