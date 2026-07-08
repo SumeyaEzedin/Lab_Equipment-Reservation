@@ -10,11 +10,14 @@ const requireRole = require('./middleware/roleMiddleware');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const reservationRoutes = require('./routes/reservationRoutes');
+const damageReportRoutes = require('./routes/damageReportRoutes');
+
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/equipment', equipmentRoutes);
 app.use('/api/reservations', reservationRoutes);
+app.use('/api/damage-reports', damageReportRoutes);
 // Test route to confirm server + DB connection work
 app.get('/api/health', async (req, res) => {
     try {
