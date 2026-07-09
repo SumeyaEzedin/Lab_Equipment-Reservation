@@ -1,3 +1,4 @@
+const logger = require('../utils/logger');
 const jwt = require('jsonwebtoken');
 const { hashPassword, comparePassword } = require('../utils/hash');
 const { createUser, findUserByEmail } = require('../models/User');
@@ -49,7 +50,7 @@ async function register(req, res) {
     }
 }
 
-// POST /api/auth/login
+
 async function login(req, res) {
     try {
         const { email, password } = req.body;
@@ -69,7 +70,7 @@ async function login(req, res) {
         }
 
         const token = generateToken(user);
-
+logger.info(`User logged in: ${user.email} (role: ${user.role})`);
         res.status(200).json({
             message: 'Login successful',
             user: { id: user.id, name: user.name, email: user.email, role: user.role },

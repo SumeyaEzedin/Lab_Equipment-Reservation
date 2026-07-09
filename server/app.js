@@ -15,8 +15,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const reservationRoutes = require('./routes/reservationRoutes');
 const damageReportRoutes = require('./routes/damageReportRoutes');
-
+const logger = require('./utils/logger');
 app.use(express.json());
+app.use((req, res, next) => {
+    logger.info(`${req.method} ${req.originalUrl}`);
+    next();
+});
 app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/equipment', equipmentRoutes);
