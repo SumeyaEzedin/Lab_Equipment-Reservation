@@ -1,3 +1,14 @@
+function formatDateTime(isoString) {
+    const date = new Date(isoString);
+    return date.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    });
+}
+
 async function loadReservations() {
     const tbody = document.getElementById('reservationsTableBody');
     tbody.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
@@ -8,6 +19,11 @@ async function loadReservations() {
 
         const user = getUser();
         const canManage = user.role === 'technician' || user.role === 'admin';
+
+        if (reservations.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6">No reservations yet</td></tr>';
+            return;
+        }
 
         reservations.forEach(r => {
             const row = document.createElement('tr');
@@ -25,10 +41,10 @@ async function loadReservations() {
             }
 
             row.innerHTML = `
-                <td>${r.equipment_name || r.equipment_id}</td>
+                <td>${r.equipment_name || 'Equipment #' + r.equipment_id}</td>
                 <td>${r.quantity_requested}</td>
-                <td>${new Date(r.start_time).toLocaleString()}</td>
-                <td>${new Date(r.end_time).toLocaleString()}</td>
+                <td>${formatDateTime(r.start_time)}</td>
+                <td>${formatDateTime(r.end_time)}</td>
                 <td><span class="status-badge status-${r.status}">${r.status}</span></td>
                 <td>${actions}</td>
             `;
@@ -48,13 +64,18 @@ async function requestReservation() {
     const startTime = document.getElementById('resStart').value;
     const endTime = document.getElementById('resEnd').value;
 
+    if (!quantityRequested || !startTime || !endTime) {
+        errorEl.textContent = 'Please fill in quantity, start time, and end time';
+        return;
+    }
+
     try {
         await apiRequest('/reservations', 'POST', { equipmentId, quantityRequested, startTime, endTime });
-        document.getElementById('resEquipmentId').value = '';
         document.getElementById('resQuantity').value = '';
         document.getElementById('resStart').value = '';
         document.getElementById('resEnd').value = '';
         loadReservations();
+        loadEquipment(); // refresh availability numbers
     } catch (err) {
         errorEl.textContent = err.message;
     }
@@ -82,6 +103,7 @@ async function returnReservation(id) {
     try {
         await apiRequest(`/reservations/${id}/return`, 'PATCH');
         loadReservations();
+        loadEquipment(); // refresh availability numbers
     } catch (err) {
         alert('Error processing return: ' + err.message);
     }

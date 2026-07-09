@@ -1,13 +1,14 @@
 const pool = require('../config/db');
 
-async function createEquipment({ name, category, description, quantity, addedBy }) {
+async function createEquipment({ name, category, description, quantity, addedBy, imageUrl }) {
     const result = await pool.query(
-        `INSERT INTO Equipment (name, category, description, quantity, added_by)
-         VALUES ($1, $2, $3, $4, $5)
+        `INSERT INTO Equipment (name, category, description, quantity, added_by, image_url)
+         VALUES ($1, $2, $3, $4, $5, $6)
          RETURNING *`,
-        [name, category, description, quantity, addedBy]
+        [name, category, description, quantity, addedBy, imageUrl]
     );
     return result.rows[0];
+
 }
 
 async function getAllEquipment() {
@@ -20,13 +21,13 @@ async function getEquipmentById(id) {
     return result.rows[0];
 }
 
-async function updateEquipment(id, { name, category, description, quantity, status }) {
+async function updateEquipment(id, { name, category, description, quantity, status, imageUrl }) {
     const result = await pool.query(
         `UPDATE Equipment
-         SET name = $1, category = $2, description = $3, quantity = $4, status = $5
-         WHERE id = $6
+         SET name = $1, category = $2, description = $3, quantity = $4, status = $5, image_url = $6
+         WHERE id = $7
          RETURNING *`,
-        [name, category, description, quantity, status, id]
+        [name, category, description, quantity, status, imageUrl, id]
     );
     return result.rows[0];
 }

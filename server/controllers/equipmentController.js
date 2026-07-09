@@ -34,7 +34,7 @@ async function getEquipment(req, res) {
 // POST /api/equipment - admin only
 async function addEquipment(req, res) {
     try {
-        const { name, category, description, quantity } = req.body;
+        const { name, category, description, quantity, imageUrl } = req.body;
 
         if (!name || !quantity) {
             return res.status(400).json({ message: 'Name and quantity are required' });
@@ -45,7 +45,8 @@ async function addEquipment(req, res) {
             category,
             description,
             quantity,
-            addedBy: req.user.id // comes from the JWT via verifyToken middleware
+            addedBy: req.user.id,
+            imageUrl
         });
 
         res.status(201).json(newEquipment);
@@ -55,6 +56,7 @@ async function addEquipment(req, res) {
     }
 }
 
+
 // PUT /api/equipment/:id - admin only
 async function editEquipment(req, res) {
     try {
@@ -63,14 +65,15 @@ async function editEquipment(req, res) {
             return res.status(404).json({ message: 'Equipment not found' });
         }
 
-        const { name, category, description, quantity, status } = req.body;
+        const { name, category, description, quantity, status, imageUrl } = req.body;
 
         const updated = await updateEquipment(req.params.id, {
             name: name ?? existing.name,
             category: category ?? existing.category,
             description: description ?? existing.description,
             quantity: quantity ?? existing.quantity,
-            status: status ?? existing.status
+            status: status ?? existing.status,
+            imageUrl: imageUrl ?? existing.image_url
         });
 
         res.status(200).json(updated);

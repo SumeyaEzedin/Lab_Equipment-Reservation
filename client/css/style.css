@@ -168,3 +168,43 @@ th {
 .btn-approve { background: #28a745; }
 .btn-reject { background: #dc3545; }
 .btn-return { background: #17a2b8; }
+.equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 15px;
+}
+
+.equipment-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fafafa;
+}
+
+.equipment-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    background: #e0e0e0;
+}
+
+.equipment-card-body {
+    padding: 12px;
+}
+
+.equipment-card-body h4 {
+    margin: 0 0 6px 0;
+    font-size: 15px;
+}
+
+.equipment-card-body p {
+    margin: 4px 0;
+    font-size: 13px;
+    color: #555;
+}
+
+.equipment-id-tag {
+    font-size: 11px;
+    color: #999;
+}

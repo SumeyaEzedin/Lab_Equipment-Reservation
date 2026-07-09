@@ -22,6 +22,7 @@ CREATE TABLE Equipment (
     name VARCHAR(150) NOT NULL,
     category VARCHAR(100),
     description TEXT,
+    image_url TEXT,
     quantity INT NOT NULL DEFAULT 1,
     status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'maintenance', 'retired')),
     added_by INT REFERENCES Users(id) ON DELETE SET NULL,
