@@ -1,3 +1,10 @@
+process.on('uncaughtException', (err) => {
+    console.error('UNCAUGHT EXCEPTION:', err);
+});
+
+process.on('unhandledRejection', (err) => {
+    console.error('UNHANDLED REJECTION:', err);
+});
 process.on('exit', (code) => {
     console.log('Process is exiting with code:', code);
 });
@@ -40,7 +47,7 @@ app.get('/api/health', async (req, res) => {
         res.status(500).json({ status: 'error', message: 'Database connection failed' });
     }
 });
-
+setInterval(() => {}, 1000 * 60 * 60);
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
